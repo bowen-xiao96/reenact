@@ -1,97 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="" />
+    <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/crop_and_convert.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/dump_annotation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/sample_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/finetune.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/block/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/block/biggan.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/block/block_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/block/normalization.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/block/perceptual_loss.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/block/sagan.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/external/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/external/vgg/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/external/vgg/vgg_caffe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/external/vgg/vgg_convert.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/loss/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/loss/gan_loss.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/model1_finetune.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/model/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/reenact.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reenact.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/face/dataset/voxceleb1/extract_landmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/face/dataset/voxceleb1/extract_landmark.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/face/dataset/voxceleb2/clean_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/face/dataset/voxceleb2/clean_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/face/face_readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/face/face_readme.md" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/face/vgg_model/convert_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1411">
-              <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/face/vgg_model/convert_model.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/reenact.iml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="38" />
-    <option name="y" value="-8" />
-    <option name="width" value="1932" />
-    <option name="height" value="1047" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="reenact" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reenact" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reenact" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reenact" type="462c0819:PsiDirectoryNode" />
-              <item name="face" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reenact" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reenact" type="462c0819:PsiDirectoryNode" />
-              <item name="face" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="reenact" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reenact" type="462c0819:PsiDirectoryNode" />
-              <item name="face" type="462c0819:PsiDirectoryNode" />
-              <item name="vgg_model" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectId" id="1RVqcaXROyBqH4Uv9a3R99Xc5uk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/scripts" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ephemeroptera\Desktop\reenact\human\model" />
+      <recent name="C:\Users\Ephemeroptera\Desktop\reenact\human\model\models\vgg" />
+      <recent name="C:\Users\Ephemeroptera\Desktop\reenact\human\model\utils" />
+      <recent name="C:\Users\Ephemeroptera\Desktop\reenact\human\model\blocks" />
+      <recent name="C:\Users\Ephemeroptera\Desktop\reenact\human\model\loss" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -105,6 +85,81 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Python.skeleton">
+    <configuration name="dump_annotation" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="reenact" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/human/dataset/human36m" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/human/dataset/human36m/dump_annotation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sample_image" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="reenact" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/human/dataset/human36m" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/human/dataset/human36m/sample_image.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="skeleton" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="reenact" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/human/dataset/human36m" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.skeleton" />
+        <item itemvalue="Python.sample_image" />
+        <item itemvalue="Python.dump_annotation" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -116,83 +171,69 @@
       <option name="presentableId" value="Default" />
       <updated>1567857780818</updated>
       <workItem from="1567857783698" duration="233000" />
+      <workItem from="1567860764170" duration="2722000" />
+      <workItem from="1567871196285" duration="25000" />
+      <workItem from="1567906605578" duration="1379000" />
+      <workItem from="1567954890639" duration="1995000" />
+      <workItem from="1567994961327" duration="3272000" />
+      <workItem from="1568032098146" duration="8052000" />
+      <workItem from="1568125671953" duration="4483000" />
+      <workItem from="1568190669139" duration="5000" />
+      <workItem from="1568190689813" duration="77000" />
+      <workItem from="1568202226529" duration="64000" />
+      <workItem from="1568269308907" duration="70000" />
+      <workItem from="1568269431169" duration="316000" />
+      <workItem from="1568274434063" duration="1113000" />
+      <workItem from="1568275582289" duration="86000" />
+      <workItem from="1568283192346" duration="1073000" />
+      <workItem from="1568458065188" duration="1458000" />
+      <workItem from="1568533419750" duration="22338000" />
+      <workItem from="1568617770935" duration="4490000" />
+      <workItem from="1568633867825" duration="15881000" />
+      <workItem from="1568722319580" duration="22525000" />
+      <workItem from="1568791672355" duration="1658000" />
+      <workItem from="1568794222975" duration="38098000" />
+      <workItem from="1569044239085" duration="1200000" />
+      <workItem from="1569050107138" duration="5000" />
+      <workItem from="1569052256050" duration="54023000" />
+      <workItem from="1569235161888" duration="27098000" />
+      <workItem from="1569580518998" duration="6338000" />
+      <workItem from="1569762698400" duration="2445000" />
+      <workItem from="1569810281726" duration="38145000" />
+      <workItem from="1569890880146" duration="3305000" />
+      <workItem from="1569904866546" duration="9329000" />
+      <workItem from="1569915325873" duration="947000" />
     </task>
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="233000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/face/vgg_model/vgg_network.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="86" column="17" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/face/model/network.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/face/model/loss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="62" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/face/config.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/face/vgg_model/convert_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
-          <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/reenact$sample_image.coverage" NAME="sample_image Coverage Results" MODIFIED="1568909755464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
+    <SUITE FILE_PATH="coverage/reenact$skeleton.coverage" NAME="skeleton Coverage Results" MODIFIED="1569121443809" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
+    <SUITE FILE_PATH="coverage/reenact$dump_annotation.coverage" NAME="dump_annotation Coverage Results" MODIFIED="1568816140630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
   </component>
 </project>

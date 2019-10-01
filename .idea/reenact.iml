@@ -2,9 +2,26 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/face" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/external/CIHP_PGN" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/dataset/human36m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/dataset" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/blocks" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/normalization" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/loss" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/models" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/models/vgg" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/models/mula" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/external" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/external/vgg" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/external/mula" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/human/model/block" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/face" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">
