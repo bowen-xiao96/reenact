@@ -12,8 +12,12 @@ if __name__ == '__main__':
         for video_id in os.listdir(os.path.join(root_dir, person_id)):
             print('%s %s' % (person_id, video_id))
 
-            for video in os.listdir(os.path.join(root_dir, person_id, video_id)):
-                fullname = os.path.join(root_dir, person_id, video_id, video)
+            video_root = os.path.join(root_dir, person_id, video_id)
+            for video in os.listdir(video_root):
+                fullname = os.path.join(video_root, video)
 
                 if os.path.getsize(fullname) < 1024:
                     shutil.move(fullname, os.path.join(recycle_dir, '%s_%s_%s' % (person_id, video_id, video)))
+
+            if len(os.listdir(video_root)) == 0:
+                shutil.move(video_root, recycle_dir)

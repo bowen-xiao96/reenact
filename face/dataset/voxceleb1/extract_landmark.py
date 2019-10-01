@@ -52,7 +52,7 @@ def main_routine(input_var):
             landmarks = extract_landmark(detector, arr)
 
             if landmarks is None:
-                print('No face detected in image' + full_path)
+                print('No face detected in image ' + full_path)
                 continue  # neglect this frame
             else:
                 metadata.append((f, landmarks))
