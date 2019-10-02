@@ -18,7 +18,7 @@ import config
 
 import model.model1 as model1
 from dataset.human36m.human36m import Human36m
-from model.utils import *
+from dataset.human36m.dataset_utils import to_pil_image
 
 os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
 
@@ -181,9 +181,27 @@ def main():
 
             # checkpoint
             if total_step and total_step % config.check_every == 0:
-                sw.add_images('x_hat', g_output.data.cpu(), global_step=total_step)
-                sw.add_images('x_t', x_t.data.cpu(), global_step=total_step)
-                sw.add_images('y_t', y_t.data.cpu(), global_step=total_step)
+                save_path = os.path.join(log_path, 'check_%d' % total_step)
+                if not os.path.exists(save_path):
+                    os.makedirs(save_path)
+
+                for i in range(config.metatrain_batch_size):
+                    sw.add_images('x_%d' % i, x[i].data.cpu(), global_step=total_step)
+                    sw.add_image('x_hat_%d' % i, g_output[i].data.cpu(), global_step=total_step)
+                    sw.add_image('x_t_%d' % i, x_t[i].data.cpu(), global_step=total_step)
+                    sw.add_image('y_t_%d' % i, y_t[i].data.cpu(), global_step=total_step)
+
+                    # save for each image in the batch
+                    to_pil_image(g_output[i, ...].data.cpu(), model1.input_normalize) \
+                        .save(os.path.join(save_path, 'x_hat_%d.jpg' % i))
+                    to_pil_image(x_t[i, ...].data.cpu(), model1.input_normalize) \
+                        .save(os.path.join(save_path, 'x_t_%d.jpg' % i))
+                    to_pil_image(y_t[i, ...].data.cpu(), model1.input_normalize) \
+                        .save(os.path.join(save_path, 'y_t_%d.jpg' % i))
+
+                    for j in range(config.metatrain_T):
+                        to_pil_image(x[i, j, ...].data.cpu(), model1.input_normalize) \
+                            .save(os.path.join(save_path, 'x_%d_%d.jpg' % (i, j)))
 
                 # periodically call this to boost training
                 torch.cuda.empty_cache()

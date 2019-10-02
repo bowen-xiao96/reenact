@@ -2,38 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/crop_and_convert.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/dump_annotation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/sample_image.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/finetune.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/block/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/block/biggan.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/block/block_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/block/normalization.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/block/perceptual_loss.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/block/sagan.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/external/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/external/vgg/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/external/vgg/vgg_caffe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/external/vgg/vgg_convert.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/loss/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/loss/gan_loss.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/model1_finetune.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human/model/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/reenact.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reenact.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/face/dataset/voxceleb1/extract_landmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/face/dataset/voxceleb1/extract_landmark.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/face/dataset/voxceleb2/clean_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/face/dataset/voxceleb2/clean_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/face/face_readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/face/face_readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/meta_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/model1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +32,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/scripts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -203,6 +176,10 @@
       <workItem from="1569890880146" duration="3305000" />
       <workItem from="1569904866546" duration="9329000" />
       <workItem from="1569915325873" duration="947000" />
+      <workItem from="1569916531248" duration="2254000" />
+      <workItem from="1569935143558" duration="677000" />
+      <workItem from="1569982618173" duration="1304000" />
+      <workItem from="1570005140372" duration="513000" />
     </task>
     <servers />
   </component>

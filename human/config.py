@@ -12,7 +12,7 @@ random_flip = True
 random_crop = True
 
 # checkpoint
-max_epoch = 50
+max_epoch = 1000
 display_every = 10
 check_every = 1000
 save_every = 5000

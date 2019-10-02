@@ -73,7 +73,7 @@ vgg19_layers = (0, 5, 10, 19, 28)  # all before relu activation
 
 # weight of each loss
 loss_weight = {
-    'content_loss': 50,
+    'content_loss': 10,
     'vgg19_loss': 1e-2,
     'adv_loss': 1e0,
     'fm_loss': 1e1,
