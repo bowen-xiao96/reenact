@@ -1,6 +1,8 @@
+import os, sys
+
 # path
-train_dataset = '/userhome/35/rnchen2/human36m/sampled_images'
-test_dataset = '/userhome/35/rnchen2/human36m/sampled_images'
+train_dataset = os.path.expanduser('~/human36m/sampled_images')
+test_dataset = os.path.expanduser('~/human36m/sampled_images')
 
 # gpu
 gpu_id = 0
@@ -12,7 +14,7 @@ random_flip = True
 random_crop = True
 
 # checkpoint
-max_epoch = 1000
+max_epoch = 300
 display_every = 10
 check_every = 1000
 save_every = 5000

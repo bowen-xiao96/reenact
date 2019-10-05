@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/human/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/meta_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/block/biggan.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/block/biggan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/block/block_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/block/block_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/model/model1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +35,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/scripts" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -180,6 +183,7 @@
       <workItem from="1569935143558" duration="677000" />
       <workItem from="1569982618173" duration="1304000" />
       <workItem from="1570005140372" duration="513000" />
+      <workItem from="1570257041800" duration="8623000" />
     </task>
     <servers />
   </component>

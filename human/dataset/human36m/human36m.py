@@ -14,7 +14,7 @@ from .dataset_utils import *
 
 class Human36m(Dataset):
     def __init__(self, root_dir, modality, return_count, image_size, normalize, keypoint_size=5, skeleton_width=2,
-                 extend_ratio=0.2, depth_voxel_count=None, random_flip=False, random_crop=False):
+                 extend_ratio=0.2, random_flip=False, random_crop=False):
         super(Human36m, self).__init__()
         self.root_dir = root_dir
         self.modality = modality
@@ -25,7 +25,6 @@ class Human36m(Dataset):
         self.skeleton_width = skeleton_width
 
         self.extend_ratio = extend_ratio
-        self.depth_voxel_count = depth_voxel_count
         self.random_flip = random_flip
         self.random_crop = random_crop
 
@@ -44,10 +43,8 @@ class Human36m(Dataset):
             with open(os.path.join(root_dir, clip, 'metadata.pkl'), 'rb') as f_in:
                 metadata_list = pickle.load(f_in)
 
-            image_count = len(metadata_list)
-            idx_list = list(range(image_count))
-            random.shuffle(idx_list)
-            video_list.append((idx_list, metadata_list))
+            random.shuffle(metadata_list)
+            video_list.append(metadata_list)
 
         self.video_list = video_list
 
@@ -56,24 +53,21 @@ class Human36m(Dataset):
 
     def __getitem__(self, item):
         clip = self.clip_list[item]
-        pos = self.pos[item]
-        image_count = len(self.video_list[item][0])
+        metadata_list = self.video_list[item]
+        image_count = len(metadata_list)
 
-        if pos + self.return_count > image_count:
+        if self.pos[item] + self.return_count > image_count:
             # reset
-            pos = 0
             self.pos[item] = 0
-            random.shuffle(self.video_list[item][0])
+            random.shuffle(metadata_list)
 
         images = list()
         skeletons = list()
 
         # read images
         for i in range(self.return_count):
-            idx_list, metadata_list = self.video_list[item]
-            idx = idx_list[pos + i]  # [pos, pos + 1, ... pos + return_count - 1]
-
-            file_name, bbox, keypoints_img, depth = metadata_list[idx]
+            # [pos, pos + 1, ... pos + return_count - 1]
+            file_name, bbox, keypoints_img, depth = metadata_list[self.pos[item] + i]
 
             img_fullname = os.path.join(self.root_dir, clip, file_name)
             img = Image.open(img_fullname).convert('RGB')
@@ -141,10 +135,13 @@ class Human36m(Dataset):
             output_size = (self.image_size, self.image_size)
             cropped_img = cropped_img.resize(output_size, Image.LANCZOS)
 
+            # convert to tensor
+            images.append(to_tensor(cropped_img, self.normalize))
+
+            # calculate skeleton
             keypoints_img[:, 0] *= ratio_w
             keypoints_img[:, 1] *= ratio_h
 
-            # calculate skeleton
             if self.modality == 'skeleton_2d':
                 skeleton_img = skeleton.skeleton_2d(output_size, keypoints_img, depth, flip)
                 skeleton_img = to_tensor(skeleton_img, self.normalize)
@@ -159,19 +156,8 @@ class Human36m(Dataset):
                 skeleton_img = torch.cat((skeleton_img, depth_map), dim=0)
 
                 skeletons.append(skeleton_img)
-            elif self.modality == 'skeleton_3d':
-                skeleton_map = skeleton.skeleton_3d(output_size, self.depth_voxel_count, keypoints_img, depth, flip)
-                skeleton_map = np.transpose(skeleton_map, (3, 2, 0, 1))  # 3 * depth_voxel_count * h * w
-                skeleton_map = skeleton_map.astype(np.float32)
-
-                if self.normalize:
-                    skeleton_map /= 255.0
-
-                skeleton_map = torch.from_numpy(skeleton_map)
-                skeletons.append(skeleton_map)
-
-            cropped_img = to_tensor(cropped_img, self.normalize)
-            images.append(cropped_img)
+            else:
+                raise NotImplementedError()
 
         # move forward pointer
         self.pos[item] += self.return_count
@@ -198,7 +184,10 @@ if __name__ == '__main__':
     random_flip = True
     random_crop = True
 
-    dataset = Human36m(image_dir, modality, return_count + 1, image_size, normalize, 5, 2,
+    # including the ground truth image
+    return_all = return_count + 1
+
+    dataset = Human36m(image_dir, modality, return_all, image_size, normalize, 5, 2,
                        extend_ratio, random_flip=random_flip, random_crop=random_crop)
 
     print(len(dataset))
@@ -208,8 +197,13 @@ if __name__ == '__main__':
             assert j == item
             print('%d: %d' % (i, j))
 
-            output_img = Image.new('RGB', (return_count * image_size, 3 * image_size), 'white')
-            for t in range(return_count):
+            assert images.size(0) == return_count
+            assert skeletons.size(0) == return_count
+            images = torch.cat((torch.unsqueeze(image_t, dim=0), images), dim=0)
+            skeletons = torch.cat((torch.unsqueeze(skeleton_t, dim=0), skeletons), dim=0)
+
+            output_img = Image.new('RGB', (return_all * image_size, 3 * image_size), 'white')
+            for t in range(return_all):
                 ii = to_pil_image(images[t], normalize)
                 output_img.paste(ii, (t * image_size, 0))
 

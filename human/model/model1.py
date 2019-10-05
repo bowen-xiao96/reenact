@@ -1,10 +1,11 @@
+import os, sys
 import numpy as np
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .block.biggan import ResidualBlockUp, ResidualBlockDown, ResidualBlockDown3D
+from .block.biggan import ResidualBlockUp, ResidualBlockDown
 from .block.perceptual_loss import ResidualBlock, ResidualBlockAdaIN
 from .block.sagan import SelfAttention
 from .loss.gan_loss import loss_fm, loss_adv
@@ -14,7 +15,6 @@ from .utils import set_grad_enabled
 # config of the network strcture
 input_size = 256
 input_modality = 'skeleton_2d'
-depth_voxel_count = 10
 input_normalize = True
 score_normalize = False
 
@@ -85,22 +85,17 @@ vgg19_mean = [103.939, 116.779, 123.68]  # BGR
 vgg19_std = [1.0, 1.0, 1.0]
 
 # weight file path
-vgg19_weight_file = '/userhome/35/rnchen2/human36m/vgg19_caffe.pth'
+vgg19_weight_file = os.path.expanduser('~/human36m/vgg19_caffe.pth')
 
 
-def _make_layers(layer_config, input_dim, input_depth):
+def _make_layers(layer_config, input_dim):
     layer_list = nn.ModuleList()
     in_channel = input_dim
 
     for i, c in enumerate(layer_config):
         if c[0] == 'D':  # ResidualBlockDown
             out_channel, kernel_size, pooling_kernel = c[1:]
-            if i == 0 and input_depth != 1:
-                # 3d input
-                layer = ResidualBlockDown3D(in_channel, out_channel, input_depth, kernel_size, pooling_kernel)
-            else:
-                # 2d input
-                layer = ResidualBlockDown(in_channel, out_channel, kernel_size, pooling_kernel)
+            layer = ResidualBlockDown(in_channel, out_channel, kernel_size, pooling_kernel)
             in_channel = out_channel
 
         elif c[0] == 'A':  # SelfAttention
@@ -138,17 +133,12 @@ class Generator(nn.Module):
 
         if input_modality == 'skeleton_2d':
             input_dim = 3
-            input_depth = 1
         elif input_modality == 'skeleton_rgbd':
             input_dim = 4
-            input_depth = 1
-        elif input_modality == 'skeleton_3d':
-            input_dim = 3
-            input_depth = depth_voxel_count
         else:
             raise NotImplementedError()
 
-        self.layers = _make_layers(G_config, input_dim, input_depth)
+        self.layers = _make_layers(G_config, input_dim)
 
         # calculate AdaIN slice
         in_channel = input_dim
@@ -221,36 +211,21 @@ class Embedder(nn.Module):
 
         if input_modality == 'skeleton_2d':
             input_dim = 6
-            input_depth = 1
         elif input_modality == 'skeleton_rgbd':
             input_dim = 8
-            input_depth = 1
-        elif input_modality == 'skeleton_3d':
-            input_dim = 3
-            input_depth = depth_voxel_count + 1
         else:
             raise NotImplementedError()
 
-        self.layers = _make_layers(E_config, input_dim, input_depth)
+        self.layers = _make_layers(E_config, input_dim)
 
     def forward(self, x, y):
-        if input_modality == 'skeleton_3d':
-            # x: n * T * c * h * w
-            # y: n * T * c * d * h * w
-            x = torch.unsqueeze(x, dim=3)
-            xx = torch.cat((x, y), dim=3)
+        # x: n * T * c * h * w
+        # y: n * T * c * h * s
+        xx = torch.cat((x, y), dim=2)
 
-            # (n * T) * c * (d + 1) * h * w
-            n, T, c, d, h, w = xx.size()
-            xx = xx.view(-1, c, d, h, w)
-        else:
-            # x: n * T * c * h * w
-            # y: n * T * c * h * s
-            xx = torch.cat((x, y), dim=2)
-
-            # (n * T) * (2 * c) * h * w
-            n, T, c, h, w = xx.size()
-            xx = xx.view(-1, c, h, w)
+        # (n * T) * (2 * c) * h * w
+        n, T, c, h, w = xx.size()
+        xx = xx.view(-1, c, h, w)
 
         for layer in self.layers:
             xx = layer(xx)
@@ -274,17 +249,12 @@ class Discriminator(nn.Module):
 
         if input_modality == 'skeleton_2d':
             input_dim = 6
-            input_depth = 1
         elif input_modality == 'skeleton_rgbd':
             input_dim = 8
-            input_depth = 1
-        elif input_modality == 'skeleton_3d':
-            input_dim = 3
-            input_depth = depth_voxel_count + 1
         else:
             raise NotImplementedError()
 
-        self.layers = _make_layers(V_config, input_dim, input_depth)
+        self.layers = _make_layers(V_config, input_dim)
 
         # projection discriminator
         self.embedding = nn.Embedding(sample_count, embedding_dim)
@@ -293,15 +263,9 @@ class Discriminator(nn.Module):
         self.b = nn.Parameter(torch.as_tensor(0.0), requires_grad=True)
 
     def forward(self, x, y, sample_idx):
-        if input_modality == 'skeleton_3d':
-            # x: n * c * h * w
-            # y: n * c * d * h * w
-            x = torch.unsqueeze(x, dim=2)
-            xx = torch.cat((x, y), dim=2)
-        else:
-            # x: n * c * h * w
-            # y: n * c * h * w
-            xx = torch.cat((x, y), dim=1)
+        # x: n * c * h * w
+        # y: n * c * h * w
+        xx = torch.cat((x, y), dim=1)
 
         # the output of each residual block and the final score
         features = list()
@@ -382,10 +346,10 @@ class Loss_EG(nn.Module):
         mch_loss = F.l1_loss(w, e)
 
         loss_all = content_loss * loss_weight['content_loss'] + \
-                   vgg19_loss * loss_weight['vgg19_loss'] + \
-                   adv_loss * loss_weight['adv_loss'] + \
-                   fm_loss * loss_weight['fm_loss'] + \
-                   mch_loss * loss_weight['mch_loss']
+            vgg19_loss * loss_weight['vgg19_loss'] + \
+            adv_loss * loss_weight['adv_loss'] + \
+            fm_loss * loss_weight['fm_loss'] + \
+            mch_loss * loss_weight['mch_loss']
 
         return {'1_content_loss': content_loss, '2_vgg19_loss': vgg19_loss, '3_adv_loss': adv_loss,
                 '4_fm_loss': fm_loss, '5_mch_loss': mch_loss, 'eg_loss': loss_all}

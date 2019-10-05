@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.cm as cm
 import matplotlib.colors as colors
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 from PIL import Image, ImageDraw
 
@@ -41,7 +40,6 @@ for i, j in connections:
 
 # color of keypoints
 keypoint_2d_color = 'gray'
-keypoint_3d_color = 'white'
 
 # colormap of the skeleton
 skeleton_colormap_name = 'jet'
@@ -235,81 +233,6 @@ def skeleton_rgbd(image_size, keypoints_2d, depth, flip, _DEBUG=False, original_
     return skeleton_img, depth_img
 
 
-def skeleton_3d(image_size, depth_voxel, keypoints_2d, depth, flip, _DEBUG=False, original_img=None):
-    if flip:
-        c = connections_flipped
-    else:
-        c = connections
-
-    w, h = image_size
-    voxel_rgba = np.zeros((h, w, depth_voxel, 4), dtype=np.float32)
-
-    normalized_depth = _depth_normalize_1(depth)
-
-    # draw skeleton
-    for t, (i, j) in enumerate(c):
-        x1, y1 = keypoints_2d[i]
-        z1 = normalized_depth[i]
-        x2, y2 = keypoints_2d[j]
-        z2 = normalized_depth[j]
-
-        img_line = Image.new('L', image_size, 'black')  # black:0, white: 255
-        draw = ImageDraw.ImageDraw(img_line)
-        draw.line((x1, y1, x2, y2), fill='white', width=skeleton_width)
-
-        nonzero_y, nonzero_x = np.nonzero(np.array(img_line))  # x: horizontal, v: vertical
-        z = _interpolate_depth(nonzero_x, nonzero_y, x1, y1, z1, x2, y2, z2)
-
-        nonzero_z = np.round(z * (depth_voxel - 1)).astype(np.int64)  # array
-        voxel_rgba[nonzero_y, nonzero_x, nonzero_z, ...] = np.array(skeleton_colors[t])  # RGBA
-
-    # draw circle keypoints
-    for i in range(keypoint_count):
-        x, y = keypoints_2d[i]
-        z = normalized_depth[i]
-        radius = float(keypoint_size) / 2
-        bbox = (x - radius, y - radius, x + radius, y + radius)
-
-        img_circle = Image.new('L', image_size, 'black')
-        draw = ImageDraw.ImageDraw(img_circle)
-        draw.ellipse(bbox, fill='white')
-        nonzero_y, nonzero_x = np.nonzero(np.array(img_circle))
-
-        nonzero_z = np.round(z * (depth_voxel - 1)).astype(np.int64)  # scalar
-        voxel_rgba[nonzero_y, nonzero_x, nonzero_z, ...] = np.array(colors.to_rgba(keypoint_3d_color))
-
-    voxel_rgb = voxel_rgba[:, :, :, :-1]  # (h, w, depth_voxel, 3)
-    voxel_rgb = np.round(255.0 * voxel_rgb).astype(np.uint8)  # [0, 255]
-
-    if _DEBUG:
-        voxel_mask = np.sum(voxel_rgb, axis=-1).astype(np.bool_)  # (h, w, depth_voxel)
-
-        # voxel_mask_transposed = np.transpose(voxel_mask, (1, 2, 0))  # (w, depth_voxel, h)
-        # voxel_rgba_transposed = np.transpose(voxel_rgba, (1, 2, 0, 3))  # (w, depth_voxel, h, 3)
-        #
-        # plt.clf()
-        # fig = plt.gcf()
-        # ax = Axes3D(fig)
-        # ax.voxels(filled=voxel_mask_transposed, facecolors=voxel_rgba_transposed, linewidth=0.0)  # 3d skeleton
-        # plt.show()
-
-        min_depth = np.argmax(voxel_mask, axis=-1)
-        min_depth_flatten = np.reshape(min_depth, -1)
-        voxel_rgb_flatten = np.reshape(voxel_rgb, (-1, depth_voxel, 3))
-        projected_img_flatten = voxel_rgb_flatten[np.arange(h * w), min_depth_flatten, ...]
-        projected_img = np.reshape(projected_img_flatten, (h, w, 3))
-
-        original_img2 = np.array(original_img.convert('RGB'))
-        nonzero_pos = np.nonzero(np.sum(projected_img, axis=-1))
-        original_img2[nonzero_pos] = projected_img[nonzero_pos]
-
-        plt.clf()
-        plt.imshow(Image.fromarray(original_img2))  # 3d skeleton projected over the original image
-        plt.show()
-
-    return voxel_rgb
-
-
 if __name__ == '__main__':
     # testing
     import pickle
@@ -339,7 +262,6 @@ if __name__ == '__main__':
 
     image_dir = r'D:\Work\human36m\cropped_images'
     sample_count = 20
-    depth_voxel = 10
 
     os.chdir(image_dir)
     for clip in os.listdir('.'):
@@ -372,7 +294,3 @@ if __name__ == '__main__':
             # skeleton_rgbd
             skeleton_rgbd((w, h), keypoints_img, depth, False, _DEBUG=True, original_img=img)
             skeleton_rgbd((w, h), flipped_keypoints, depth, True, _DEBUG=True, original_img=flipped_img)
-
-            # skeleton_3d
-            skeleton_3d((w, h), depth_voxel, keypoints_img, depth, False, _DEBUG=True, original_img=img)
-            skeleton_3d((w, h), depth_voxel, flipped_keypoints, depth, True, _DEBUG=True, original_img=flipped_img)

@@ -76,39 +76,3 @@ class ResidualBlockDown(nn.Module):
 
         output = left + right
         return output
-
-
-class ResidualBlockDown3D(nn.Module):
-    # downsampling residual block with 3D tensor as input
-
-    def __init__(self, in_channel, out_channel, depth, kernel_size=3, pooling_kernel=2):
-        super(ResidualBlockDown3D, self).__init__()
-        self.in_channel = in_channel
-        self.out_channel = out_channel
-        self.depth = depth
-        self.kernel_size = kernel_size
-        self.pooling_kernel = pooling_kernel
-
-        # left
-        self.conv_l1 = get_conv3d_layer(in_channel, out_channel, depth, 1, spectral_norm=True)
-
-        # right
-        self.conv_r1 = get_conv3d_layer(in_channel, in_channel, depth, kernel_size, spectral_norm=True)
-        self.conv_r2 = get_conv_layer(in_channel, out_channel, kernel_size, spectral_norm=True)
-
-    def forward(self, x):
-        # left
-        left = self.conv_l1(x)
-        left = torch.squeeze(left, dim=2)
-        left = F.avg_pool2d(left, self.pooling_kernel)
-
-        # right
-        right = F.relu(x, inplace=False)
-        right = self.conv_r1(right)
-        right = torch.squeeze(right, dim=2)
-        right = F.relu(right, inplace=False)
-        right = self.conv_r2(right)
-        right = F.avg_pool2d(right, self.pooling_kernel)
-
-        output = left + right
-        return output
