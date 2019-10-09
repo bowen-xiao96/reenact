@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from .block.biggan import ResidualBlockUp, ResidualBlockDown
 from .block.perceptual_loss import ResidualBlock, ResidualBlockAdaIN
 from .block.sagan import SelfAttention
-from .loss.gan_loss import loss_fm, loss_adv
+from .loss.gan_loss import loss_dsc_hinge, loss_fm, loss_adv
 from .external.vgg.vgg_caffe import VGGActivation, VGGNetwork
 from .utils import set_grad_enabled
 
@@ -142,7 +142,7 @@ class Generator(nn.Module):
 
         # calculate AdaIN slice
         in_channel = input_dim
-        param_count = list()
+        self.adain_slice = list()
 
         for c in G_config:
             if c[0] == 'D':  # ResidualBlockDown
@@ -151,16 +151,14 @@ class Generator(nn.Module):
 
             elif c[0] == 'BA' or c[0] == 'U':  # ResidualBlockAdaptive, ResidualBlockUp
                 out_channel, kernel_size = c[1:3]
-                param_count.append((in_channel, in_channel))
+                self.adain_slice.append((in_channel, in_channel))
                 in_channel = out_channel
 
             elif c[0] == 'I' or c[0] == 'B':
                 continue
 
-        self.adain_slice = param_count
-
         # calculate the overall number of adain parameters
-        self.adain_param_count = np.sum(param_count)
+        self.adain_param_count = np.sum(self.adain_slice)
 
         # projection matrix
         # note that we need both sigma and mu
@@ -197,6 +195,7 @@ class Generator(nn.Module):
         # sanity check
         assert adain_start_pos == self.adain_param_count
 
+        # normalize to [0, 1]
         y = torch.sigmoid(y)
 
         if not input_normalize:
@@ -306,10 +305,7 @@ class Loss_DSC(nn.Module):
         D_score = d_out['d_scores']
         D_score_hat = d_out_hat['d_scores']
 
-        loss = F.relu(1.0 - D_score)
-        loss_hat = F.relu(1.0 + D_score_hat)
-
-        loss_all = torch.mean(loss + loss_hat)  # average over batch size
+        loss_all = loss_dsc_hinge(D_score_hat, D_score)
         return {'dsc_loss': loss_all}
 
 

@@ -1,8 +1,8 @@
 import os, sys
 
 # path
-train_dataset = os.path.expanduser('~/human36m/sampled_images')
-test_dataset = os.path.expanduser('~/human36m/sampled_images')
+train_dataset = os.path.expanduser('~/human36m/train_images')
+test_dataset = os.path.expanduser('~/human36m/test_images')
 
 # gpu
 gpu_id = 0

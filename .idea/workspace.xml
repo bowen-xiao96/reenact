@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/sample_image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/meta_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/model1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.skeleton">
+  <component name="RunManager" selected="Python.split_and_sample">
     <configuration name="dump_annotation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="reenact" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -124,8 +127,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="split_and_sample" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="reenact" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/human/dataset/human36m" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.split_and_sample" />
         <item itemvalue="Python.skeleton" />
         <item itemvalue="Python.sample_image" />
         <item itemvalue="Python.dump_annotation" />
@@ -183,7 +209,9 @@
       <workItem from="1570418367611" duration="91000" />
       <workItem from="1570462172230" duration="437000" />
       <workItem from="1570552011008" duration="9000" />
-      <workItem from="1570552243561" duration="11937000" />
+      <workItem from="1570552243561" duration="12967000" />
+      <workItem from="1570609461413" duration="2582000" />
+      <workItem from="1570617460661" duration="5708000" />
     </task>
     <servers />
   </component>
@@ -219,5 +247,6 @@
     <SUITE FILE_PATH="coverage/reenact$sample_image.coverage" NAME="sample_image Coverage Results" MODIFIED="1568909755464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
     <SUITE FILE_PATH="coverage/reenact$skeleton.coverage" NAME="skeleton Coverage Results" MODIFIED="1569121443809" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
     <SUITE FILE_PATH="coverage/reenact$dump_annotation.coverage" NAME="dump_annotation Coverage Results" MODIFIED="1568816140630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
+    <SUITE FILE_PATH="coverage/reenact$split_and_sample.coverage" NAME="split_and_sample Coverage Results" MODIFIED="1570611336016" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
   </component>
 </project>

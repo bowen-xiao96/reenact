@@ -13,14 +13,15 @@ from .dataset_utils import *  # from dataset_utils import *
 
 
 class Human36m(Dataset):
-    def __init__(self, root_dir, modality, return_count, image_size, normalize, keypoint_size=5, skeleton_width=2,
-                 extend_ratio=0.2, random_flip=False, random_crop=False):
+    def __init__(self, root_dir, modality, return_count, image_size, normalize, shuffle,
+                 keypoint_size=5, skeleton_width=2, extend_ratio=0.2, random_flip=False, random_crop=False):
         super(Human36m, self).__init__()
         self.root_dir = root_dir
         self.modality = modality
         self.return_count = return_count
         self.image_size = image_size
         self.normalize = normalize
+        self.shuffle = shuffle
 
         self.keypoint_size = keypoint_size
         self.skeleton_width = skeleton_width
@@ -43,8 +44,15 @@ class Human36m(Dataset):
             with open(os.path.join(root_dir, video, 'metadata.pkl'), 'rb') as f_in:
                 metadata = pickle.load(f_in)
 
-            random.shuffle(metadata)
+            if shuffle:
+                random.shuffle(metadata)
+            else:
+                metadata.sort(key=lambda x: x[0])
+
             self.all_metadata.append(metadata)
+
+        frame_count = min([len(metadata) for metadata in self.all_metadata])
+        self.batch_count = frame_count // self.return_count
 
     def __len__(self):
         return self.video_count
@@ -58,7 +66,8 @@ class Human36m(Dataset):
         if self.pos[item] + self.return_count > image_count:
             # reset
             self.pos[item] = 0
-            random.shuffle(metadata)
+            if self.shuffle:
+                random.shuffle(metadata)
 
         images = list()
         skeletons = list()
@@ -100,7 +109,7 @@ class Human36m(Dataset):
                 new_y2 = y2 + extend_down
 
             else:
-                extend_ratio = float(self.extend_ratio) / 2  # for one side
+                extend_ratio = self.extend_ratio / 2  # for one side
                 extend = min(left, right, up, down)
                 extend = min(extend, side * extend_ratio)
 
@@ -185,7 +194,7 @@ if __name__ == '__main__':
     return_all = return_count + 1
 
     dataset = Human36m(image_dir, modality, return_all, image_size, normalize, 5, 2,
-                       extend_ratio, random_flip=random_flip, random_crop=random_crop)
+                       extend_ratio=0.2, random_flip=random_flip, random_crop=random_crop)
 
     print(len(dataset))
 
