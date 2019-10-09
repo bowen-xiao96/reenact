@@ -8,8 +8,8 @@ from PIL import Image
 import torch
 from torch.utils.data import *
 
-import dataset.human36m.skeleton as skeleton
-from .dataset_utils import *
+from . import skeleton  # import skeleton
+from .dataset_utils import *  # from dataset_utils import *
 
 
 class Human36m(Dataset):
@@ -21,9 +21,9 @@ class Human36m(Dataset):
         self.return_count = return_count
         self.image_size = image_size
         self.normalize = normalize
+
         self.keypoint_size = keypoint_size
         self.skeleton_width = skeleton_width
-
         self.extend_ratio = extend_ratio
         self.random_flip = random_flip
         self.random_crop = random_crop
@@ -32,44 +32,43 @@ class Human36m(Dataset):
         skeleton.skeleton_width = skeleton_width
 
         # load the list of all images
-        clip_list = os.listdir(root_dir)
-        self.clip_list = clip_list
-        self.clip_count = len(clip_list)
+        self.all_videos = os.listdir(root_dir)
+        self.video_count = len(self.all_videos)
 
-        self.pos = [0 for _ in range(self.clip_count)]
+        # current sample pos for each video
+        self.pos = [0 for _ in range(self.video_count)]
 
-        video_list = list()
-        for clip in clip_list:
-            with open(os.path.join(root_dir, clip, 'metadata.pkl'), 'rb') as f_in:
-                metadata_list = pickle.load(f_in)
+        self.all_metadata = list()
+        for video in self.all_videos:
+            with open(os.path.join(root_dir, video, 'metadata.pkl'), 'rb') as f_in:
+                metadata = pickle.load(f_in)
 
-            random.shuffle(metadata_list)
-            video_list.append(metadata_list)
-
-        self.video_list = video_list
+            random.shuffle(metadata)
+            self.all_metadata.append(metadata)
 
     def __len__(self):
-        return self.clip_count
+        return self.video_count
 
     def __getitem__(self, item):
-        clip = self.clip_list[item]
-        metadata_list = self.video_list[item]
-        image_count = len(metadata_list)
+        video = self.all_videos[item]
+        metadata = self.all_metadata[item]
+        image_count = len(metadata)
 
+        # self.pos[item], self.pos[item] + 1, ..., self.pos[item] + self.return_count - 1
         if self.pos[item] + self.return_count > image_count:
             # reset
             self.pos[item] = 0
-            random.shuffle(metadata_list)
+            random.shuffle(metadata)
 
         images = list()
         skeletons = list()
 
         # read images
         for i in range(self.return_count):
-            # [pos, pos + 1, ... pos + return_count - 1]
-            file_name, bbox, keypoints_img, depth = metadata_list[self.pos[item] + i]
+            idx = self.pos[item] + i
+            file_name, bbox, keypoints_img, depth = metadata[idx]
 
-            img_fullname = os.path.join(self.root_dir, clip, file_name)
+            img_fullname = os.path.join(self.root_dir, video, file_name)
             img = Image.open(img_fullname).convert('RGB')
             w, h = img.size
 
@@ -95,29 +94,27 @@ class Human36m(Dataset):
                 extend_up = random.uniform(max(0, extend - down), min(up, extend))
                 extend_down = extend - extend_up
 
-                x1 -= extend_left
-                y1 -= extend_up
-                x2 += extend_right
-                y2 += extend_down
-                side += extend
+                new_x1 = x1 - extend_left
+                new_y1 = y1 - extend_up
+                new_x2 = x2 + extend_right
+                new_y2 = y2 + extend_down
 
             else:
                 extend_ratio = float(self.extend_ratio) / 2  # for one side
                 extend = min(left, right, up, down)
                 extend = min(extend, side * extend_ratio)
 
-                x1 -= extend
-                y1 -= extend
-                x2 += extend
-                y2 += extend
-                side += 2 * extend
+                new_x1 = x1 - extend
+                new_y1 = y1 - extend
+                new_x2 = x2 + extend
+                new_y2 = y2 + extend
 
             # calculate new coordinates
-            keypoints_img[:, 0] -= x1
-            keypoints_img[:, 1] -= y1
+            keypoints_img[:, 0] -= new_x1
+            keypoints_img[:, 1] -= new_y1
 
             # crop the image
-            cropped_img = img.crop((x1, y1, x2, y2))
+            cropped_img = img.crop((new_x1, new_y1, new_x2, new_y2))
             new_w, new_h = cropped_img.size
 
             # random flip
@@ -148,12 +145,12 @@ class Human36m(Dataset):
 
                 skeletons.append(skeleton_img)
             elif self.modality == 'skeleton_rgbd':
-                skeleton_img, depth_map = skeleton.skeleton_rgbd(output_size, keypoints_img, depth, flip)
+                skeleton_img, depth_img = skeleton.skeleton_rgbd(output_size, keypoints_img, depth, flip)
                 skeleton_img = to_tensor(skeleton_img, self.normalize)
 
-                depth_map = torch.from_numpy(depth_map)
-                depth_map = torch.unsqueeze(depth_map, dim=0)
-                skeleton_img = torch.cat((skeleton_img, depth_map), dim=0)
+                depth_img = torch.from_numpy(depth_img)
+                depth_img = torch.unsqueeze(depth_img, dim=0)
+                skeleton_img = torch.cat((skeleton_img, depth_img), dim=0)
 
                 skeletons.append(skeleton_img)
             else:
@@ -162,7 +159,7 @@ class Human36m(Dataset):
         # move forward pointer
         self.pos[item] += self.return_count
 
-        # form output
+        # output
         skeleton_t = skeletons[0]
         image_t = images[0]
         skeletons = torch.stack(skeletons[1:])
@@ -176,7 +173,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     image_dir = r'D:\Work\human36m\sampled_images'
-    modality = 'skeleton_2d'
+    modality = 'skeleton_rgbd'
     return_count = 3
     image_size = 256
     normalize = True
@@ -192,32 +189,49 @@ if __name__ == '__main__':
 
     print(len(dataset))
 
-    for i in range(5):
-        for j, (item, images, skeletons, image_t, skeleton_t) in enumerate(dataset):
-            assert j == item
-            print('%d: %d' % (i, j))
+    for i, (item, images, skeletons, image_t, skeleton_t) in enumerate(dataset):
+        assert i == item
 
-            assert images.size(0) == return_count
-            assert skeletons.size(0) == return_count
-            images = torch.cat((torch.unsqueeze(image_t, dim=0), images), dim=0)
-            skeletons = torch.cat((torch.unsqueeze(skeleton_t, dim=0), skeletons), dim=0)
+        assert images.size(0) == return_count
+        assert skeletons.size(0) == return_count
 
-            output_img = Image.new('RGB', (return_all * image_size, 3 * image_size), 'white')
-            for t in range(return_all):
-                ii = to_pil_image(images[t], normalize)
-                output_img.paste(ii, (t * image_size, 0))
+        image_t = torch.unsqueeze(image_t, dim=0)
+        images = torch.cat((image_t, images), dim=0)
+        skeleton_t = torch.unsqueeze(skeleton_t, dim=0)
+        skeletons = torch.cat((skeleton_t, skeletons), dim=0)
 
-                ss = to_pil_image(skeletons[t], normalize)
-                output_img.paste(ss, (t * image_size, image_size))
+        # image
+        skeletons_rgb = skeletons[:, :-1, ...]
+        canvas = Image.new('RGB', (return_all * image_size, 3 * image_size), 'white')
+        for j in range(return_all):
+            # original RGB image
+            ii = to_pil_image(images[j], normalize)
+            canvas.paste(ii, (j * image_size, 0))
 
-                ii_arr = np.array(ii)
-                ss_arr = np.array(ss)
-                nonzero_pos = np.nonzero(np.sum(ss_arr, axis=-1))
-                fused = ii_arr.copy()
-                fused[nonzero_pos] = ss_arr[nonzero_pos]
-                fused = Image.fromarray(fused)
-                output_img.paste(fused, (t * image_size, 2 * image_size))
+            # RGB skeleton
+            ss = to_pil_image(skeletons_rgb[j], normalize)
+            canvas.paste(ss, (j * image_size, image_size))
 
-            plt.clf()
-            plt.imshow(output_img)
-            plt.show()
+            # skeleton drawn over the original image
+            ii_arr = np.array(ii)
+            ss_arr = np.array(ss)
+            nonzero_pos = np.nonzero(np.sum(ss_arr, axis=-1))
+            fused_arr = ii_arr.copy()
+            fused_arr[nonzero_pos] = ss_arr[nonzero_pos]
+            fused = Image.fromarray(fused_arr)
+            canvas.paste(fused, (j * image_size, 2 * image_size))
+
+        plt.clf()
+        plt.imshow(canvas)
+        plt.show()
+
+        # depth
+        skeletons_depth = skeletons[:, -1, ...]
+        depth_canvas = np.zeros((image_size, return_all * image_size), dtype=np.float32)
+        for j in range(return_all):
+            depth_canvas[..., j * image_size: (j + 1) * image_size] = skeletons_depth[j].numpy()
+
+        plt.clf()
+        plt.imshow(depth_canvas, cmap=skeleton.skeleton_colormap)
+        plt.colorbar()
+        plt.show()

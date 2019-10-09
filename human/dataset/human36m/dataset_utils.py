@@ -36,7 +36,7 @@ def extend_box_to_square(x1, y1, x2, y2, img_w, img_h):
     return x1, y1, x2, y2, side
 
 
-def draw_bbox(img, bboxes, line_width=5):
+def draw_bbox(img, *bboxes, line_width=5):
     img2 = img.copy()
     draw = ImageDraw.ImageDraw(img2)
 

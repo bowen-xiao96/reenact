@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/human/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/model/block/biggan.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/block/biggan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/model/block/block_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/block/block_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/model/model1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +34,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/scripts" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -184,6 +180,10 @@
       <workItem from="1569982618173" duration="1304000" />
       <workItem from="1570005140372" duration="513000" />
       <workItem from="1570257041800" duration="8623000" />
+      <workItem from="1570418367611" duration="91000" />
+      <workItem from="1570462172230" duration="437000" />
+      <workItem from="1570552011008" duration="9000" />
+      <workItem from="1570552243561" duration="11937000" />
     </task>
     <servers />
   </component>
@@ -211,6 +211,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/reenact$sample_image.coverage" NAME="sample_image Coverage Results" MODIFIED="1568909755464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/human/dataset/human36m" />
