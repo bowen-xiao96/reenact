@@ -25,8 +25,8 @@ save_optim_state = False
 # training hyperparameter
 metatrain_batch_size = 3
 finetune_batch_size = 2
-metatrain_T = 8  # the number of training images in an episode
-finetune_T = 8
+metatrain_T = 1  # the number of training images in an episode
+finetune_T = 1
 d_step = 2
 
 # learning rate

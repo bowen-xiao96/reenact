@@ -4,10 +4,7 @@
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/meta_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -215,6 +212,9 @@
       <workItem from="1570667414971" duration="2850000" />
       <workItem from="1570693489071" duration="9356000" />
       <workItem from="1570773522622" duration="3075000" />
+      <workItem from="1570781773908" duration="947000" />
+      <workItem from="1570794158694" duration="3391000" />
+      <workItem from="1570798012564" duration="183000" />
     </task>
     <servers />
   </component>

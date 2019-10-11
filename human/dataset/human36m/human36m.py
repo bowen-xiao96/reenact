@@ -125,8 +125,9 @@ class Human36m(Dataset):
                 new_y2 = y2 + extend
 
             # calculate new coordinates
-            keypoints_img[:, 0] -= new_x1
-            keypoints_img[:, 1] -= new_y1
+            keypoints_img_new = keypoints_img.copy()
+            keypoints_img_new[:, 0] -= new_x1
+            keypoints_img_new[:, 1] -= new_y1
 
             # crop the image
             cropped_img = img.crop((new_x1, new_y1, new_x2, new_y2))
@@ -137,7 +138,7 @@ class Human36m(Dataset):
             if indicator >= 0.5:
                 flip = True
                 cropped_img = cropped_img.transpose(Image.FLIP_LEFT_RIGHT)
-                keypoints_img[:, 0] = new_w - 1 - keypoints_img[:, 0]
+                keypoints_img_new[:, 0] = new_w - 1 - keypoints_img_new[:, 0]
             else:
                 flip = False
 
@@ -151,16 +152,16 @@ class Human36m(Dataset):
             images.append(to_tensor(cropped_img, self.normalize))
 
             # calculate skeleton
-            keypoints_img[:, 0] *= ratio_w
-            keypoints_img[:, 1] *= ratio_h
+            keypoints_img_new[:, 0] *= ratio_w
+            keypoints_img_new[:, 1] *= ratio_h
 
             if self.modality == 'skeleton_2d':
-                skeleton_img = skeleton.skeleton_2d(output_size, keypoints_img, depth, flip)
+                skeleton_img = skeleton.skeleton_2d(output_size, keypoints_img_new, depth, flip)
                 skeleton_img = to_tensor(skeleton_img, self.normalize)
 
                 skeletons.append(skeleton_img)
             elif self.modality == 'skeleton_rgbd':
-                skeleton_img, depth_img = skeleton.skeleton_rgbd(output_size, keypoints_img, depth, flip)
+                skeleton_img, depth_img = skeleton.skeleton_rgbd(output_size, keypoints_img_new, depth, flip)
                 skeleton_img = to_tensor(skeleton_img, self.normalize)
 
                 depth_img = torch.from_numpy(depth_img)

@@ -10,7 +10,7 @@ import torch.optim as optim
 import torch.backends.cudnn
 torch.backends.cudnn.benchmark = True
 
-from torch.utils.data.dataloader import DataLoader
+from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
 import config
