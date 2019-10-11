@@ -12,6 +12,7 @@ dataset_shuffle = True
 num_worker = 8
 random_flip = True
 random_crop = True
+test_episode = 2
 
 # checkpoint
 max_epoch = 300

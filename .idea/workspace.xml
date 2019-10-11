@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/sample_image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/skeleton.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/split_and_sample.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/meta_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/model/model1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -212,6 +212,9 @@
       <workItem from="1570552243561" duration="12967000" />
       <workItem from="1570609461413" duration="2582000" />
       <workItem from="1570617460661" duration="5708000" />
+      <workItem from="1570667414971" duration="2850000" />
+      <workItem from="1570693489071" duration="9356000" />
+      <workItem from="1570773522622" duration="3075000" />
     </task>
     <servers />
   </component>

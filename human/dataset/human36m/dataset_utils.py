@@ -3,6 +3,17 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 
+def sample(population, sample_count):
+    output = list()
+    total_count = len(population)
+
+    for i in range(sample_count):
+        idx = int(round(float(i) * (total_count - 1) / (sample_count - 1)))
+        output.append(population[idx])
+
+    return output
+
+
 def extend_box_to_square(x1, y1, x2, y2, img_w, img_h):
     w = x2 - x1
     h = y2 - y1

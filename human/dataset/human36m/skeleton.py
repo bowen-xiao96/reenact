@@ -241,6 +241,7 @@ def skeleton_rgbd(image_size, keypoints_2d, depth, flip, _DEBUG=False, original_
 if __name__ == '__main__':
     # testing
     import pickle
+    from .dataset_utils import sample
 
     image_dir = r'D:\Work\human36m\cropped_images'
     sample_count = 20
@@ -248,27 +249,25 @@ if __name__ == '__main__':
     os.chdir(image_dir)
     for clip in os.listdir('.'):
         with open(os.path.join(clip, 'metadata.pkl'), 'rb') as f_in:
-            metadata_list = pickle.load(f_in)
+            metadata = pickle.load(f_in)
 
-            image_count = len(metadata_list)
-            metadata_list.sort(key=lambda x: x[0])
+        metadata.sort(key=lambda x: x[0])
 
-            for i in range(sample_count):
-                idx = int(round(float(i) * (image_count - 1) / (sample_count - 1)))
-                file_name, bbox, keypoints_img, depth = metadata_list[idx]
-                keypoints_img = np.round(keypoints_img).astype(np.int64)
+        # sample
+        sampled_metadata = sample(metadata, sample_count)
 
-                fullname = os.path.join(clip, file_name)
-                print(fullname)
+        for file_name, bbox, keypoints_img, depth in sampled_metadata:
+            fullname = os.path.join(clip, file_name)
+            print(fullname)
 
-                img = Image.open(fullname).convert('RGB')
-                w, h = img.size
+            img = Image.open(fullname).convert('RGB')
+            w, h = img.size
 
-                skeleton_rgbd((w, h), keypoints_img, depth, False, _DEBUG=True, original_img=img)
+            skeleton_rgbd((w, h), keypoints_img, depth, False, _DEBUG=True, original_img=img)
 
-                # flipped
-                flipped_img = img.transpose(Image.FLIP_LEFT_RIGHT)
-                flipped_keypoints = keypoints_img.copy()
-                flipped_keypoints[:, 0] = w - 1 - flipped_keypoints[:, 0]
+            # flipped
+            flipped_img = img.transpose(Image.FLIP_LEFT_RIGHT)
+            flipped_keypoints = keypoints_img.copy()
+            flipped_keypoints[:, 0] = w - 1 - flipped_keypoints[:, 0]
 
-                skeleton_rgbd((w, h), flipped_keypoints, depth, True, _DEBUG=True, original_img=flipped_img)
+            skeleton_rgbd((w, h), flipped_keypoints, depth, True, _DEBUG=True, original_img=flipped_img)

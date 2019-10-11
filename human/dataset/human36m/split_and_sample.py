@@ -2,6 +2,8 @@ import os, sys
 import pickle
 import shutil
 
+from .dataset_utils import sample
+
 image_dir = r'D:\Work\human36m\cropped_images'
 output_root = r'D:\Work\human36m'
 train_sample = 400
@@ -36,22 +38,17 @@ if __name__ == '__main__':
             metadata = pickle.load(f_in)
 
         metadata.sort(key=lambda x: x[0])
-        image_count = len(metadata)
+
+        # sample
+        output_metadata = sample(metadata, sample_count)
 
         output_video_root = os.path.join(output_dir, video)
         if not os.path.exists(output_video_root):
             os.makedirs(output_video_root)
 
-        # sample
-        output_metadata = list()
-
-        for i in range(sample_count):
-            idx = int(round(float(i) * (image_count - 1) / (sample_count - 1)))
-            output_metadata.append(metadata[idx])
-
+        for file_name, _, _, _ in output_metadata:
             # copy file
-            name = metadata[idx][0]
-            shutil.copy(os.path.join(video, name), os.path.join(output_video_root, name))
+            shutil.copy(os.path.join(video, file_name), os.path.join(output_video_root, file_name))
 
         with open(os.path.join(output_video_root, 'metadata.pkl'), 'wb') as f_out:
             pickle.dump(output_metadata, f_out, pickle.HIGHEST_PROTOCOL)

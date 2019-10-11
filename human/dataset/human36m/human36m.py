@@ -13,7 +13,7 @@ from .dataset_utils import *  # from dataset_utils import *
 
 
 class Human36m(Dataset):
-    def __init__(self, root_dir, modality, return_count, image_size, normalize, shuffle,
+    def __init__(self, root_dir, modality, return_count, image_size, normalize, shuffle, sample_count,
                  keypoint_size=5, skeleton_width=2, extend_ratio=0.2, random_flip=False, random_crop=False):
         super(Human36m, self).__init__()
         self.root_dir = root_dir
@@ -22,6 +22,7 @@ class Human36m(Dataset):
         self.image_size = image_size
         self.normalize = normalize
         self.shuffle = shuffle
+        self.sample_count = sample_count
 
         self.keypoint_size = keypoint_size
         self.skeleton_width = skeleton_width
@@ -44,15 +45,20 @@ class Human36m(Dataset):
             with open(os.path.join(root_dir, video, 'metadata.pkl'), 'rb') as f_in:
                 metadata = pickle.load(f_in)
 
+            if not shuffle or sample_count is not None:
+                # fixed by the same seed
+                old_state = random.getstate()
+                random.seed(0)
+                if sample_count is not None:
+                    metadata = random.sample(metadata, sample_count)
+                else:
+                    random.shuffle(metadata)
+                random.setstate(old_state)
+
             if shuffle:
                 random.shuffle(metadata)
-            else:
-                metadata.sort(key=lambda x: x[0])
 
             self.all_metadata.append(metadata)
-
-        frame_count = min([len(metadata) for metadata in self.all_metadata])
-        self.batch_count = frame_count // self.return_count
 
     def __len__(self):
         return self.video_count

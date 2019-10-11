@@ -1,5 +1,4 @@
 import os, sys
-import math
 import shutil
 from datetime import datetime, timedelta
 
@@ -42,13 +41,17 @@ def main():
     shutil.copy(os.path.join('model', 'model1.py'), os.path.join(log_path, 'model1.py'))
 
     # dataset
+    return_all = config.metatrain_T + 1
+    test_sample = config.test_episode * return_all
+
     train_dataset = Human36m(
         config.train_dataset,
         model1.input_modality,
-        config.metatrain_T + 1,
+        return_all,
         model1.input_size,
         model1.input_normalize,
         True,
+        None,
         random_flip=config.random_flip,
         random_crop=config.random_crop
     )
@@ -65,10 +68,11 @@ def main():
     test_dataset = Human36m(
         config.test_dataset,
         model1.input_modality,
-        config.metatrain_T + 1,
+        return_all,
         model1.input_size,
         model1.input_normalize,
         False,
+        test_sample,  # sample count
         extend_ratio=0.1,
         random_flip=False,
         random_crop=False
@@ -218,26 +222,24 @@ def main():
                     os.makedirs(save_path)
 
                 for i in range(config.metatrain_batch_size):
-                    sw.add_images('x_%d' % i, x[i].data.cpu(), global_step=total_step)
-                    sw.add_image('x_hat_%d' % i, g_output[i].data.cpu(), global_step=total_step)
-                    sw.add_image('x_t_%d' % i, x_t[i].data.cpu(), global_step=total_step)
-                    sw.add_image('y_t_%d' % i, y_t[i].data.cpu(), global_step=total_step)
+                    image_path = os.path.join(save_path, str(i))
+                    if not os.path.exists(image_path):
+                        os.makedirs(image_path)
 
                     # save each image in the batch
                     to_pil_image(g_output[i, ...].data.cpu(), model1.input_normalize) \
-                        .save(os.path.join(save_path, 'x_hat_%d.jpg' % i))
+                        .save(os.path.join(image_path, 'x_hat.jpg'))
                     to_pil_image(x_t[i, ...].data.cpu(), model1.input_normalize) \
-                        .save(os.path.join(save_path, 'x_t_%d.jpg' % i))
+                        .save(os.path.join(image_path, 'x_t.jpg'))
                     to_pil_image(y_t[i, ...].data.cpu(), model1.input_normalize) \
-                        .save(os.path.join(save_path, 'y_t_%d.jpg' % i))
+                        .save(os.path.join(image_path, 'y_t.jpg'))
 
                     for j in range(config.metatrain_T):
                         to_pil_image(x[i, j, ...].data.cpu(), model1.input_normalize) \
-                            .save(os.path.join(save_path, 'x_%d_%d.jpg' % (i, j)))
+                            .save(os.path.join(image_path, 'x_%d.jpg' % j))
 
                 # periodically call this to boost training
                 torch.cuda.empty_cache()
-                sw.flush()
 
             # save model
             if total_step and total_step % config.save_every == 0:
@@ -258,34 +260,34 @@ def main():
                 E = E.eval()
                 torch.set_grad_enabled(False)
 
-                for k in range(test_dataset.batch_count):
+                for k in range(config.test_episode):
                     for _video_idx, _x, _y, _x_t, _y_t in test_dataset:
-                        image_path = os.path.join(save_path, 'video_%d' % _video_idx)
+                        video_name = test_dataset.all_videos[_video_idx]
+                        image_path = os.path.join(save_path, '%s_%d' % (video_name, k))
+                        if not os.path.exists(image_path):
+                            os.makedirs(image_path)
 
-                        x = x.cuda()
-                        y = y.cuda()  # T * c * h * w
-                        y_t = y_t.cuda()  # c * h * w
-
-                        x = torch.unsqueeze(x, dim=0)
-                        y = torch.unsqueeze(y, dim=0)
-                        y_t = torch.unsqueeze(y_t, dim=0)
+                        _x = _x.cuda()
+                        _y = _y.cuda()  # T * c * h * w
+                        _y_t = _y_t.cuda()  # c * h * w
 
                         # feed into network
-                        e_output = E(x, y)
-                        g_output = G(y_t, e_output)
-                        g_output = torch.squeeze(g_output)  # c * h * w
+                        _e_output = E(torch.unsqueeze(_x, dim=0), torch.unsqueeze(_y, dim=0))
+                        _g_output = G(torch.unsqueeze(_y_t, dim=0), _e_output)
+
+                        _g_output = torch.squeeze(_g_output)
 
                         # save each image in the batch
-                        to_pil_image(g_output.data.cpu(), model1.input_normalize) \
-                            .save(os.path.join(image_path, 'x_hat_%d.jpg' % k))
+                        to_pil_image(_g_output.data.cpu(), model1.input_normalize) \
+                            .save(os.path.join(image_path, 'x_hat.jpg'))
                         to_pil_image(_x_t.data.cpu(), model1.input_normalize) \
-                            .save(os.path.join(image_path, 'x_t_%d.jpg' % k))
+                            .save(os.path.join(image_path, 'x_t.jpg'))
                         to_pil_image(_y_t.data.cpu(), model1.input_normalize) \
-                            .save(os.path.join(image_path, 'y_t_%d.jpg' % k))
+                            .save(os.path.join(image_path, 'y_t.jpg'))
 
                         for j in range(config.metatrain_T):
                             to_pil_image(_x[j, ...].data.cpu(), model1.input_normalize) \
-                                .save(os.path.join(image_path, 'x_%d_%d.jpg' % (k, j)))
+                                .save(os.path.join(image_path, 'x_%d.jpg' % j))
 
                 torch.set_grad_enabled(True)
 
