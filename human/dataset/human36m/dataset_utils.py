@@ -64,14 +64,15 @@ def to_tensor(img_or_array, normalize):
     if normalize:
         array /= 255.0
 
-    tensor = torch.from_numpy(array)
-    return tensor
+    t = torch.from_numpy(array)
+    return t
 
 
-def to_pil_image(tensor, normalize):
-    tensor = torch.squeeze(tensor)
+def to_pil_image(t, normalize):
+    if len(t.size()) == 4:
+        t = torch.squeeze(t, dim=0)
 
-    array = tensor.detach().cpu().numpy()  # c * h * w
+    array = t.detach().cpu().numpy()  # c * h * w
     array = np.transpose(array, (1, 2, 0))
 
     if normalize:

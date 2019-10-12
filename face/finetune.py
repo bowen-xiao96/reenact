@@ -162,7 +162,7 @@ def main(model_file):
         # dataset
         dataset = TensorDataset(x, y)
         dataloader = DataLoader(dataset, batch_size=config.finetune_batch_size, shuffle=config.dataset_shuffle,
-                                num_workers=config.num_worker, pin_memory=True, drop_last=False)
+                                num_workers=0, pin_memory=True, drop_last=False)
 
         # finetune
         for epoch in range(config.finetune_epoch):
@@ -214,7 +214,7 @@ def main(model_file):
 
         # save image
         training_img = Image.new('RGB', (config.finetune_T * config.input_size, config.input_size))
-        for j in range(config.metatrain_T):
+        for j in range(config.finetune_T):
             img = to_pil_image(x[j], config.input_normalize)
             training_img.paste(img, (j * config.input_size, 0))
 

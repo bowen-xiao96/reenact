@@ -338,7 +338,7 @@ class Loss_EG(nn.Module):
         fm_loss = loss_fm(d_features, d_features_hat)
 
         # matching loss
-        w = torch.unsqueeze(w, 1).expand(e.size())
+        w = torch.unsqueeze(w, dim=1).expand(e.size())
         mch_loss = F.l1_loss(w, e)
 
         loss_all = content_loss * loss_weight['content_loss'] + \

@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="fecaac16-6baa-43f7-ab1e-7f6654a74b39" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/human36m.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/face/finetune.py" beforeDir="false" afterPath="$PROJECT_DIR$/face/finetune.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/dataset/human36m/dataset_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/finetune.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/finetune.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human/meta_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/meta_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/block/normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/block/normalization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/model1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human/model/model1_finetune.py" beforeDir="false" afterPath="$PROJECT_DIR$/human/model/model1_finetune.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -215,6 +219,12 @@
       <workItem from="1570781773908" duration="947000" />
       <workItem from="1570794158694" duration="3391000" />
       <workItem from="1570798012564" duration="183000" />
+      <workItem from="1570799928606" duration="504000" />
+      <workItem from="1570803246777" duration="1385000" />
+      <workItem from="1570865110915" duration="507000" />
+      <workItem from="1570865882243" duration="306000" />
+      <workItem from="1570866223496" duration="1682000" />
+      <workItem from="1570878781444" duration="8959000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,6 @@
 import os, sys
 import shutil
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import torch
 import torch.nn as nn
@@ -238,6 +238,8 @@ def main():
                         to_pil_image(x[i, j, ...].data.cpu(), model1.input_normalize) \
                             .save(os.path.join(image_path, 'x_%d.jpg' % j))
 
+                sw.add_images('g_output', g_output.data.cpu(), global_step=total_step)
+
                 # periodically call this to boost training
                 torch.cuda.empty_cache()
 
@@ -275,7 +277,7 @@ def main():
                         _e_output = E(torch.unsqueeze(_x, dim=0), torch.unsqueeze(_y, dim=0))
                         _g_output = G(torch.unsqueeze(_y_t, dim=0), _e_output)
 
-                        _g_output = torch.squeeze(_g_output)
+                        _g_output = torch.squeeze(_g_output, dim=0)
 
                         # save each image in the batch
                         to_pil_image(_g_output.data.cpu(), model1.input_normalize) \

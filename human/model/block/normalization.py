@@ -21,8 +21,8 @@ def adaptive_instance_normalize(feature_map, sigma, mu, eps=1e-5):
     feature_map = (feature_map - mean) / std
 
     # rescale the normalized feature map
-    sigma = torch.unsqueeze(sigma, -1)
-    mu = torch.unsqueeze(mu, -1)
+    sigma = torch.unsqueeze(sigma, dim=-1)
+    mu = torch.unsqueeze(mu, dim=-1)
     feature_map = sigma * feature_map + mu
 
     feature_map = feature_map.view(n, c, h, w)
